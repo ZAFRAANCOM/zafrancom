@@ -170,9 +170,8 @@ export function FeatureStrip({ lang }: { lang: Lang }) {
   const t = copy[lang];
   return (
     <section className="feature-strip">
-      {[t.natural, t.premium, t.value, t.local].map((item, i) => (
+      {[t.natural, t.premium, t.value, t.local].map((item) => (
         <div key={item}>
-          <span>0{i + 1}</span>
           <strong>{item}</strong>
         </div>
       ))}

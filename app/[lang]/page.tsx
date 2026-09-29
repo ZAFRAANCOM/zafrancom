@@ -20,14 +20,16 @@ export default async function HomePage({ params }: LangParams) {
         <section className="hero">
           <div className="hero-copy">
             <span className="eyebrow">
-              {lang === "ar" ? "زعفران محلي · مؤاب" : "Local saffron · Muab"}
+              {lang === "ar"
+                ? "نقاء الذهب الأحمر · إنتاج مؤابي أصيل"
+                : "Local saffron · Muab"}
             </span>
             <h1>
               {lang === "ar" ? (
                 <>
-                  ذهب الطبيعة،
+                  أصالة مؤاب،
                   <br />
-                  <em>بلمسة محلية.</em>
+                  <em>بين أيديكم.</em>
                 </>
               ) : (
                 <>
@@ -39,7 +41,7 @@ export default async function HomePage({ params }: LangParams) {
             </h1>
             <p>
               {lang === "ar"
-                ? "زعفرانكم — جودة طبيعية تُقطف بعناية وتصل إليك كما أرادتها الأرض."
+                ? "زعفرانكم — زراعة هوائية محلية نقية، تُقطف يدوياً وبكل عناية لنقدم لك أعلى معايير الجودة والنكهة الأصلية."
                 : "Zaffarn — natural quality, carefully harvested and brought to you as the land intended."}
             </p>
             <a
@@ -63,7 +65,6 @@ export default async function HomePage({ params }: LangParams) {
               preload
             />
             <div className="image-caption">
-              <span>01</span>
               <span>
                 {lang === "ar" ? "حصاد بعناية" : "Harvested with care"}
               </span>
