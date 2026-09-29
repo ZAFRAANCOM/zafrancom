@@ -10,7 +10,7 @@ export function Footer({ lang }: { lang: Lang }) {
     <footer className="site-footer">
       <div>
         <Link className="brand" href={`/${lang}`}>
-          <Image className="brand-logo" src={images.logo} alt="Zaffarn" />
+          <Image className="brand-logo" src={images.logo} alt="zafraancom" />
           <span className="sr-only">زعفرانكم</span>
         </Link>
         <p>
@@ -41,7 +41,7 @@ export function Footer({ lang }: { lang: Lang }) {
         © 2026{" "}
         {lang === "ar"
           ? "زعفرانكم. جميع الحقوق محفوظة."
-          : "Zaffarn. All rights reserved."}
+          : "zafraancom. All rights reserved."}
       </div>
     </footer>
   );

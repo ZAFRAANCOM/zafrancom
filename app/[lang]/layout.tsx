@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getLang, langs, type Lang, type LangParams } from "@/lib/i18n";
 import { images } from "@/lib/images";
 
-const siteUrl = "https://zaffarn.com";
+const siteUrl = "https://zafraancom.com";
 const logoUrl = images.logo.src;
 
 const localizedMetadata: Record<
@@ -20,7 +20,7 @@ const localizedMetadata: Record<
   }
 > = {
   ar: {
-    title: "زعفرانكم | Zaffarn",
+    title: "زعفرانكم | zafraancom",
     titleTemplate: "%s | زعفرانكم",
     description: "زعفران أردني أصيل ومنتجاته الطبيعية — جودة مختارة بلمسة محلية.",
     ogLocale: "ar_JO",
@@ -30,17 +30,17 @@ const localizedMetadata: Record<
     logoAlt: "شعار زعفرانكم",
   },
   en: {
-    title: "Zaffarn | زعفرانكم",
-    titleTemplate: "%s | Zaffarn",
+    title: "zafraancom | زعفرانكم",
+    titleTemplate: "%s | zafraancom",
     description:
       "Authentic Jordanian saffron and its natural products — carefully selected, locally grown.",
     ogLocale: "en_US",
-    ogTitle: "Zaffarn | Authentic Jordanian Saffron",
+    ogTitle: "zafraancom | Authentic Jordanian Saffron",
     ogDescription:
       "Discover authentic Jordanian saffron and its carefully selected natural products.",
     twitterDescription:
       "Authentic Jordanian saffron and natural products, locally grown.",
-    logoAlt: "Zaffarn logo",
+    logoAlt: "zafraancom logo",
   },
 };
 
@@ -48,7 +48,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "زعفرانكم",
-  alternateName: "Zaffarn",
+  alternateName: "zafraancom",
   url: siteUrl,
   logo: new URL(logoUrl, siteUrl).href,
   contactPoint: {
@@ -81,7 +81,7 @@ export async function generateMetadata({
       "زعفران",
       "منتجات الزعفران",
       "زيت الزعفران",
-      "Zaffarn",
+      "zafraancom",
       "Jordanian saffron",
     ],
     authors: [{ name: "زعفرانكم" }],
@@ -90,7 +90,7 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: m.ogLocale,
-      siteName: "زعفرانكم | Zaffarn",
+      siteName: "زعفرانكم | zafraancom",
       title: m.ogTitle,
       description: m.ogDescription,
       images: [

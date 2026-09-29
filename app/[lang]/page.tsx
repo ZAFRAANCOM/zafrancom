@@ -42,7 +42,7 @@ export default async function HomePage({ params }: LangParams) {
             <p>
               {lang === "ar"
                 ? "زعفرانكم — زراعة هوائية محلية نقية، تُقطف يدوياً وبكل عناية لنقدم لك أعلى معايير الجودة والنكهة الأصلية."
-                : "Zaffarn — natural quality, carefully harvested and brought to you as the land intended."}
+                : "zafraancom — natural quality, carefully harvested and brought to you as the land intended."}
             </p>
             <a
               className="gold-button"

@@ -17,7 +17,7 @@ export function OrderForm({ lang }: { lang: Lang }) {
     const message =
       lang === "ar"
         ? `مرحبًا زعفرانكم، أود طلب:\n\nالاسم: ${formData.get("name")}\nرقم الهاتف: ${formData.get("phone")}\nالعنوان: ${formData.get("address")}\nالمنتج: ${product?.ar.name ?? productId}\nالكمية: ${formData.get("quantity")}\nالملاحظات: ${formData.get("notes") || "لا يوجد"}`
-        : `Hello Zaffarn, I would like to place an order:\n\nName: ${formData.get("name")}\nPhone: ${formData.get("phone")}\nAddress: ${formData.get("address")}\nProduct: ${product?.en.name ?? productId}\nQuantity: ${formData.get("quantity")}\nNotes: ${formData.get("notes") || "None"}`;
+        : `Hello zafraancom, I would like to place an order:\n\nName: ${formData.get("name")}\nPhone: ${formData.get("phone")}\nAddress: ${formData.get("address")}\nProduct: ${product?.en.name ?? productId}\nQuantity: ${formData.get("quantity")}\nNotes: ${formData.get("notes") || "None"}`;
     window.open(
       `https://wa.me/962778472931?text=${encodeURIComponent(message)}`,
       "_blank",

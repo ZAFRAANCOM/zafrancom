@@ -40,7 +40,12 @@ export function Header({ lang }: { lang: Lang }) {
   return (
     <header className="site-header">
       <Link className="brand" href={`/${lang}`} onClick={() => setOpen(false)}>
-        <Image className="brand-logo" src={images.logo} alt="Zaffarn" preload />
+        <Image
+          className="brand-logo"
+          src={images.logo}
+          alt="zafraancom"
+          preload
+        />
         <span className="sr-only">زعفرانكم</span>
       </Link>
       <button

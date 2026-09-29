@@ -3,13 +3,13 @@ import { images } from "@/lib/images";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "زعفرانكم | Zaffarn",
+  title: "زعفرانكم | zafraancom",
   icons: { icon: images.logo.src },
 };
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#121212",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
 };
