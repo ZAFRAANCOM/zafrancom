@@ -1,7 +1,29 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { CTASection, PageShell } from "@/components/site";
 import { copy, getLang, type LangParams } from "@/lib/i18n";
-import { products } from "@/lib/products";
+import { formatPrice, products } from "@/lib/products";
+import { pageAlternates, whatsappMessage, whatsappUrl } from "@/lib/site";
+
+const meta = {
+  ar: {
+    title: "زعفران أردني وسيروم وأبصال الزعفران",
+    description:
+      "تسوّق زعفران أردني أصيل (1 غرام بـ 8 دنانير)، وسيروم الزعفران للوجه 10 مل (7 دنانير)، وأبصال الزعفران الجاهزة للزراعة (دينار للبصلة).",
+  },
+  en: {
+    title: "Jordanian Saffron, Serum & Bulbs",
+    description:
+      "Shop authentic Jordanian saffron (1g, 8 JD), saffron face serum (10ml, 7 JD) and saffron bulbs ready for planting (1 JD per bulb).",
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: LangParams): Promise<Metadata> {
+  const lang = await getLang(params);
+  return { ...meta[lang], alternates: pageAlternates(lang, "/products") };
+}
 
 export default async function ProductsPage({ params }: LangParams) {
   const lang = await getLang(params);
@@ -18,7 +40,7 @@ export default async function ProductsPage({ params }: LangParams) {
               <>
                 من الأرض،
                 <br />
-                <em>إلى طاولتك.</em>
+                <em>إلى طاولتكم.</em>
               </>
             ) : (
               <>
@@ -30,13 +52,14 @@ export default async function ProductsPage({ params }: LangParams) {
           </h1>
           <p>
             {lang === "ar"
-              ? "اختيارات موسمية ومنتجات طبيعية تحمل جوهر الزعفران المحلي."
-              : "Seasonal selections and natural products carrying the essence of local saffron."}
+              ? "منتجات طبيعية من زعفرانكم، تحمل جوهر الزعفران المحلي."
+              : "Natural products carrying the essence of local saffron."}
           </p>
         </section>
         <section className="product-list">
           {products.map((product, index) => {
             const item = product[lang];
+            const [title, variant] = item.name.split(" — ");
             return (
               <article
                 className="product-detail"
@@ -50,27 +73,34 @@ export default async function ProductsPage({ params }: LangParams) {
                   <span className="eyebrow">
                     0{index + 1} / {lang === "ar" ? "منتج" : "Product"}
                   </span>
-                  <h2>{item.name}</h2>
-                  <strong className="price">{item.price}</strong>
+                  <h2>
+                    {title}
+                    {variant && <span className="detail-variant">{variant}</span>}
+                  </h2>
+                  <strong className="price">
+                    {formatPrice(product, lang)}
+                  </strong>
                   <p>{item.description}</p>
-                  {product.ingredients && (
-                    <ul className="ingredients">
-                      {(lang === "ar"
-                        ? ["زيت الزعفران", "فيتامين B5", "زيت جوز الهند"]
-                        : product.ingredients
-                      ).map((ingredient) => (
-                        <li key={ingredient}>{ingredient}</li>
-                      ))}
-                    </ul>
+                  {item.ingredients && (
+                    <>
+                      <h3 className="ingredients-title">
+                        {lang === "ar" ? "المكونات" : "Ingredients"}
+                      </h3>
+                      <ul className="ingredients">
+                        {item.ingredients.map((ingredient) => (
+                          <li key={ingredient}>{ingredient}</li>
+                        ))}
+                      </ul>
+                    </>
                   )}
                   <a
                     className="gold-button"
-                    href="https://wa.me/962778472931?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%B7%D9%84%D8%A8%20%D9%85%D9%86%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%D9%83%D9%85"
+                    href={whatsappUrl(whatsappMessage(lang, item.name))}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     {t.orderNow}
-                    <span aria-hidden="true">↗</span>
+                    <span className="arrow" aria-hidden="true">↗</span>
                   </a>
                 </div>
               </article>

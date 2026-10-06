@@ -1,6 +1,28 @@
+import type { Metadata } from "next";
 import { OrderForm } from "@/components/order-form";
 import { ContactInfo, PageShell } from "@/components/site";
 import { getLang, type LangParams } from "@/lib/i18n";
+import { pageAlternates } from "@/lib/site";
+
+const meta = {
+  ar: {
+    title: "اطلب الآن وتواصل معنا",
+    description:
+      "اطلبوا زعفرانًا أردنيًا وسيروم وأبصال الزعفران عبر واتساب. عبّئوا النموذج وسنتواصل معكم لتأكيد طلبكم.",
+  },
+  en: {
+    title: "Order & Contact",
+    description:
+      "Order Jordanian saffron, serum and saffron bulbs via WhatsApp. Fill in the form and we will contact you to confirm your order.",
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: LangParams): Promise<Metadata> {
+  const lang = await getLang(params);
+  return { ...meta[lang], alternates: pageAlternates(lang, "/order") };
+}
 
 export default async function OrderPage({ params }: LangParams) {
   const lang = await getLang(params);
@@ -14,9 +36,9 @@ export default async function OrderPage({ params }: LangParams) {
           <h1>
             {lang === "ar" ? (
               <>
-                دع الذهب
+                دعوا الذهب الأحمر
                 <br />
-                <em>يصل إليك.</em>
+                <em>يصل إليكم.</em>
               </>
             ) : (
               <>
@@ -28,7 +50,7 @@ export default async function OrderPage({ params }: LangParams) {
           </h1>
           <p>
             {lang === "ar"
-              ? "املأ النموذج وسنتواصل معك لتأكيد طلبك."
+              ? "عبّئوا النموذج وسنتواصل معكم لتأكيد طلبكم."
               : "Fill in the form and we will contact you to confirm your order."}
           </p>
         </section>

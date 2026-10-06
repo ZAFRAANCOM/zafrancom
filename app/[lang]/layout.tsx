@@ -1,9 +1,9 @@
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { notoSansArabic } from "@/lib/fonts";
 import { getLang, langs, type Lang, type LangParams } from "@/lib/i18n";
 import { images } from "@/lib/images";
+import { brandName, contact, pageAlternates, siteUrl } from "@/lib/site";
 
-const siteUrl = "https://zafraancom.com";
 const logoUrl = images.logo.src;
 
 const localizedMetadata: Record<
@@ -13,53 +13,47 @@ const localizedMetadata: Record<
     titleTemplate: string;
     description: string;
     ogLocale: string;
-    ogTitle: string;
-    ogDescription: string;
-    twitterDescription: string;
     logoAlt: string;
+    keywords: string[];
   }
 > = {
   ar: {
-    title: "زعفرانكم | zafraancom",
+    title: "زعفرانكم | زعفران أردني أصيل",
     titleTemplate: "%s | زعفرانكم",
     description: "زعفران أردني أصيل ومنتجاته الطبيعية — جودة مختارة بلمسة محلية.",
     ogLocale: "ar_JO",
-    ogTitle: "زعفرانكم | زعفران أردني أصيل",
-    ogDescription: "اكتشف الزعفران الأردني الأصيل ومنتجاته الطبيعية المختارة.",
-    twitterDescription: "زعفران أردني أصيل ومنتجات طبيعية بلمسة محلية.",
     logoAlt: "شعار زعفرانكم",
+    keywords: ["زعفران أردني", "زعفران", "منتجات الزعفران", "زيت الزعفران", "سيروم الزعفران", "زعفرانكم"],
   },
   en: {
-    title: "zafraancom | زعفرانكم",
+    title: "zafraancom | Authentic Jordanian Saffron",
     titleTemplate: "%s | zafraancom",
     description:
       "Authentic Jordanian saffron and its natural products — carefully selected, locally grown.",
     ogLocale: "en_US",
-    ogTitle: "zafraancom | Authentic Jordanian Saffron",
-    ogDescription:
-      "Discover authentic Jordanian saffron and its carefully selected natural products.",
-    twitterDescription:
-      "Authentic Jordanian saffron and natural products, locally grown.",
     logoAlt: "zafraancom logo",
+    keywords: ["Jordanian saffron", "saffron", "saffron products", "saffron oil", "saffron serum", "zafraancom"],
   },
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "زعفرانكم",
-  alternateName: "zafraancom",
-  url: siteUrl,
-  logo: new URL(logoUrl, siteUrl).href,
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+962778472931",
-    contactType: "sales",
-    areaServed: "JO",
-    availableLanguage: ["ar", "en"],
-  },
-  sameAs: ["https://wa.me/962778472931"],
-};
+function structuredData(lang: Lang) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: brandName[lang],
+    ...(lang === "ar" && { alternateName: brandName.en }),
+    url: `${siteUrl}/${lang}`,
+    logo: new URL(logoUrl, siteUrl).href,
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: contact.phoneIntl,
+      contactType: "sales",
+      areaServed: "JO",
+      availableLanguage: ["ar", "en"],
+    },
+    sameAs: [contact.instagramUrl],
+  };
+}
 
 export const dynamicParams = false;
 
@@ -76,23 +70,17 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl),
     title: { default: m.title, template: m.titleTemplate },
     description: m.description,
-    keywords: [
-      "زعفران أردني",
-      "زعفران",
-      "منتجات الزعفران",
-      "زيت الزعفران",
-      "zafraancom",
-      "Jordanian saffron",
-    ],
-    authors: [{ name: "زعفرانكم" }],
-    creator: "زعفرانكم",
-    publisher: "زعفرانكم",
+    keywords: m.keywords,
+    authors: [{ name: brandName[lang] }],
+    creator: "Raed Shafeek",
+    publisher: brandName[lang],
+    alternates: pageAlternates(lang),
+    // No title/description so Next.js fills og/twitter from each page's own; "./" resolves to the current page.
     openGraph: {
       type: "website",
+      url: "./",
       locale: m.ogLocale,
-      siteName: "زعفرانكم | zafraancom",
-      title: m.ogTitle,
-      description: m.ogDescription,
+      siteName: brandName[lang],
       images: [
         {
           url: logoUrl,
@@ -102,12 +90,7 @@ export async function generateMetadata({
         },
       ],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: m.ogTitle,
-      description: m.twitterDescription,
-      images: [logoUrl],
-    },
+    twitter: { card: "summary" },
     robots: { index: true, follow: true },
   };
 }
@@ -118,14 +101,19 @@ export default async function LangLayout({
 }: Readonly<{ children: React.ReactNode } & LangParams>) {
   const lang = await getLang(params);
   return (
-    <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
+    <html
+      lang={lang}
+      dir={lang === "ar" ? "rtl" : "ltr"}
+      className={notoSansArabic.variable}
+    >
       <body className="antialiased">
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData(lang)),
+          }}
         />
-        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   );

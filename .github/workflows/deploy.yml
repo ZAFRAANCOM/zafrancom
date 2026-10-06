@@ -37,6 +37,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Type check
+        run: pnpm run typecheck
+
       - name: Build with Next.js
         run: pnpm run build
 

@@ -3,20 +3,20 @@ import Link from "next/link";
 import { Header } from "@/components/header";
 import { copy, navLinks, type Lang } from "@/lib/i18n";
 import { images } from "@/lib/images";
-import { products } from "@/lib/products";
+import { formatPrice, type Product } from "@/lib/products";
+import { brandName, contact, whatsappMessage, whatsappUrl } from "@/lib/site";
 
 export function Footer({ lang }: { lang: Lang }) {
   return (
     <footer className="site-footer">
       <div>
         <Link className="brand" href={`/${lang}`}>
-          <Image className="brand-logo" src={images.logo} alt="zafraancom" />
-          <span className="sr-only">زعفرانكم</span>
+          <Image className="brand-logo" src={images.logo} alt={brandName[lang]} />
         </Link>
         <p>
           {lang === "ar"
             ? "زعفران ومنتجاته، من إنتاج محلي مؤابي."
-            : "Saffron and its products, locally produced in Muab."}
+            : "Saffron and its products, locally produced in Moab."}
         </p>
       </div>
       <div className="footer-links">
@@ -27,14 +27,16 @@ export function Footer({ lang }: { lang: Lang }) {
         ))}
       </div>
       <div className="footer-contact">
-        <a href="tel:0778472931">077 847 2931</a>
-        <a href="mailto:mnysyah@gmail.com">mnysyah@gmail.com</a>
+        <a href={`tel:${contact.phoneIntl}`}>
+          <span dir="ltr">{contact.phoneDisplay}</span>
+        </a>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
         <a
-          href="https://www.instagram.com/zafraancom"
+          href={contact.instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
-          @zafraancom
+          <span dir="ltr">{contact.instagramHandle}</span>
         </a>
       </div>
       <div className="copyright">
@@ -52,7 +54,7 @@ export function ProductCard({
   product,
 }: {
   lang: Lang;
-  product: (typeof products)[number];
+  product: Product;
 }) {
   const item = product[lang];
   return (
@@ -71,10 +73,10 @@ export function ProductCard({
         <h3>{item.name}</h3>
         <p>{item.description}</p>
         <div className="product-meta">
-          <strong>{item.price}</strong>
+          <strong>{formatPrice(product, lang)}</strong>
           <Link href={`/${lang}/products#${product.id}`}>
             {copy[lang].view}
-            <span aria-hidden="true">↗</span>
+            <span className="arrow" aria-hidden="true">↗</span>
           </Link>
         </div>
       </div>
@@ -88,18 +90,18 @@ export function CTASection({ lang }: { lang: Lang }) {
     <section className="cta-section">
       <span className="eyebrow">
         {lang === "ar"
-          ? "المحصول القادم بين يديك"
+          ? "المحصول القادم بين أيديكم"
           : "The next harvest, in your hands"}
       </span>
       <h2>{lang === "ar" ? "اطلب منتجاتنا الآن" : "Order our products"}</h2>
       <a
         className="gold-button"
-        href="https://wa.me/962778472931?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%B7%D9%84%D8%A8%20%D9%85%D9%86%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%D9%83%D9%85"
+        href={whatsappUrl(whatsappMessage(lang))}
         target="_blank"
         rel="noopener noreferrer"
       >
         {t.orderNow}
-        <span aria-hidden="true">↗</span>
+        <span className="arrow" aria-hidden="true">↗</span>
       </a>
     </section>
   );
@@ -142,25 +144,29 @@ export function ContactInfo({ lang }: { lang: Lang }) {
       <span className="eyebrow">
         {lang === "ar" ? "تواصل معنا" : "Contact us"}
       </span>
-      <a href="tel:0778472931">
+      <a href={`tel:${contact.phoneIntl}`}>
         <small>{t.phone}</small>
-        <strong>077 847 2931</strong>
+        <strong>
+          <span dir="ltr">{contact.phoneDisplay}</span>
+        </strong>
       </a>
-      <a href="https://wa.me/962778472931">
+      <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
         <small>{t.whatsapp}</small>
-        <strong>077 847 2931</strong>
+        <strong>
+          <span dir="ltr">{contact.phoneDisplay}</span>
+        </strong>
       </a>
-      <a href="mailto:mnysyah@gmail.com">
+      <a href={`mailto:${contact.email}`}>
         <small>{t.email}</small>
-        <strong>mnysyah@gmail.com</strong>
+        <strong>
+          <span dir="ltr">{contact.email}</span>
+        </strong>
       </a>
-      <a
-        href="https://www.instagram.com/zafraancom"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={contact.instagramUrl} target="_blank" rel="noopener noreferrer">
         <small>{t.instagram}</small>
-        <strong>@zafraancom</strong>
+        <strong>
+          <span dir="ltr">{contact.instagramHandle}</span>
+        </strong>
       </a>
     </div>
   );

@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { notoSansArabic } from "@/lib/fonts";
 
 export default function NotFound() {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={notoSansArabic.variable}>
       <body className="antialiased">
         <main className="cta-section">
           <span className="eyebrow">404</span>

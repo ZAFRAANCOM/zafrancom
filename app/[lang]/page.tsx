@@ -9,7 +9,8 @@ import {
 } from "@/components/site";
 import { copy, getLang, type LangParams } from "@/lib/i18n";
 import { images } from "@/lib/images";
-import { products } from "@/lib/products";
+import { productCountLabel, products } from "@/lib/products";
+import { whatsappMessage, whatsappUrl } from "@/lib/site";
 
 export default async function HomePage({ params }: LangParams) {
   const lang = await getLang(params);
@@ -22,7 +23,7 @@ export default async function HomePage({ params }: LangParams) {
             <span className="eyebrow">
               {lang === "ar"
                 ? "نقاء الذهب الأحمر · إنتاج مؤابي أصيل"
-                : "Local saffron · Muab"}
+                : "Pure red gold · Authentic Moabite production"}
             </span>
             <h1>
               {lang === "ar" ? (
@@ -33,26 +34,32 @@ export default async function HomePage({ params }: LangParams) {
                 </>
               ) : (
                 <>
-                  Nature’s gold,
+                  The authenticity of Moab,
                   <br />
-                  <em>locally grown.</em>
+                  <em>in your hands.</em>
                 </>
               )}
             </h1>
             <p>
               {lang === "ar"
-                ? "زعفرانكم — زراعة هوائية محلية نقية، تُقطف يدوياً وبكل عناية لنقدم لك أعلى معايير الجودة والنكهة الأصلية."
-                : "zafraancom — natural quality, carefully harvested and brought to you as the land intended."}
+                ? "زعفرانكم — زراعة هوائية محلية نقية، تُقطف يدويًا بكل عناية لنقدّم لكم أعلى معايير الجودة والنكهة الأصيلة."
+                : "zafraancom — pure, locally aeroponically grown saffron, hand-picked with care to bring you the highest standards of quality and authentic flavor."}
             </p>
-            <a
-              className="gold-button"
-              href="https://wa.me/962778472931?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%A7%D9%84%D8%B7%D9%84%D8%A8%20%D9%85%D9%86%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%D9%83%D9%85"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t.orderNow}
-              <span aria-hidden="true">↗</span>
-            </a>
+            <div className="hero-actions">
+              <a
+                className="gold-button"
+                href={whatsappUrl(whatsappMessage(lang))}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.orderNow}
+                <span className="arrow" aria-hidden="true">↗</span>
+              </a>
+              <Link className="text-button" href={`/${lang}/about#story`}>
+                {t.learn}
+                <span className="arrow" aria-hidden="true">↗</span>
+              </Link>
+            </div>
           </div>
           <div className="hero-image">
             <Image
@@ -79,24 +86,15 @@ export default async function HomePage({ params }: LangParams) {
                 {lang === "ar" ? "مختاراتنا" : "Our selection"}
               </span>
               <h2>
-                {lang === "ar" ? (
-                  <>
-                    ثلاثة منتجات،
-                    <br />
-                    <em>قصة واحدة.</em>
-                  </>
-                ) : (
-                  <>
-                    Three products,
-                    <br />
-                    <em>one story.</em>
-                  </>
-                )}
+                {productCountLabel(lang)}
+                {lang === "ar" ? "،" : ","}
+                <br />
+                <em>{lang === "ar" ? "قصة واحدة." : "one story."}</em>
               </h2>
             </div>
             <Link className="text-button" href={`/${lang}/products`}>
-              {t.products}
-              <span aria-hidden="true">↗</span>
+              {t.allProducts}
+              <span className="arrow" aria-hidden="true">↗</span>
             </Link>
           </div>
           <div className="products-grid">
